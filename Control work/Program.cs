@@ -1,41 +1,38 @@
-﻿using System;
+﻿﻿using System;
+using static System.Console;
 
-class Program
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Введите элементы массива через пробел:");
-        string input = Console.ReadLine();
-        string[] inputArray = input.Split(' ');
+Clear();
 
-        string[] resultArray = GetStringsLengthLessThanOrEqualThree(inputArray);
+string[] array = AskArray();
+string[] result = FindLessThan(array, 3);
+Write($"[{string.Join(", ", array)}] -> [{string.Join(", ", result)}]");
 
-        Console.WriteLine("Результат:");
-        Console.WriteLine(string.Join(", ", resultArray));
+string[] FindLessThan(string[] input, int n) {
+    string[] output = new string[CountLessThan(input, n)];
+
+    for(int i = 0, j = 0; i < input.Length; i++) {
+        if(input[i].Length <= n) {
+            output[j] = input[i];
+            j++;
+        }
     }
 
-    static string[] GetStringsLengthLessThanOrEqualThree(string[] inputArray)
-    {
-        int count = 0;
-        for (int i = 0; i < inputArray.Length; i++)
-        {
-            if (inputArray[i].Length <= 3)
-            {
-                count++;
-            }
-        }
+    return output;
+}
 
-        string[] resultArray = new string[count];
-        int index = 0;
-        for (int i = 0; i < inputArray.Length; i++)
-        {
-            if (inputArray[i].Length <= 3)
-            {
-                resultArray[index] = inputArray[i];
-                index++;
-            }
-        }
+int CountLessThan(string[] input, int n) {
+    int count = 0;
 
-        return resultArray;
+    for(int i = 0; i < input.Length; i++) {
+        if(input[i].Length <= n) {
+            count++;
+        }
     }
+
+    return count;
+}
+
+string[] AskArray() {
+    Write("Введите значения через пробел: ");
+    return ReadLine().Split(" ");
 }
